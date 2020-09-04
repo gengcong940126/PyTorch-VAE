@@ -54,7 +54,7 @@ class Testing_PyTorch_VAE(unittest.TestCase):
         export TIME_STR=1
         export PYTHONPATH=./PyTorch_VAE_lib:./
         python -c "from exp.tests.test_pytorch_vae import Testing_PyTorch_VAE;\
-          Testing_PyTorch_VAE().test_train_vae()"
+          Testing_PyTorch_VAE().test_test_vae()"
 
     :return:
     """
