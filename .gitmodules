@@ -1,0 +1,6 @@
+[submodule "template_lib"]
+	path = template_lib
+	url = https://github.com/PeterouZh/template_lib.git
+[submodule "PyTorch_VAE_lib"]
+	path = PyTorch_VAE_lib
+	url = https://github.com/PeterouZh/PyTorch-VAE.git
