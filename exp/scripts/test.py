@@ -1,7 +1,9 @@
 import yaml
 import argparse
 import numpy as np
-
+from easydict import EasyDict
+from gans.evaluation import build_GAN_metric
+import scipy.io as scio
 from torchvision.utils import save_image
 from models import *
 from experiment import VAEXperiment
@@ -63,9 +65,34 @@ load_dict = torch.load(config.ckpt_path)
 experiment.load_state_dict(load_dict['state_dict'])
 experiment.cuda()
 experiment.eval()
-imgs = experiment.model.sample(num_samples=64, current_device=0)
+sample_dataloader=experiment.train_dataloader()
+test_input, test_label = next(iter(sample_dataloader))
+#test_input = test_input.to('cuda')
+test_label = test_label.to('cuda')
+#imgs = experiment.model.sample(num_samples=64, current_device=0)
+test_input = scio.loadmat('./index.mat')
+test_input=torch.Tensor(test_input['data']).to('cuda')
+imgs = experiment.model.generate(test_input, labels = test_label)
 
-save_image(imgs, filename=f'{args.tl_imgdir}/test.png', nrow=8, normalize=True, scale_each=True)
+#FID_IS_tf = build_GAN_metric(config.GAN_metric)
+
+class SampleFunc(object):
+    def __init__(self, model):
+        self.model=model
+        pass
+
+    def __call__(self, *args, **kwargs):
+        imgs = experiment.model.sample(num_samples=64, current_device=0)
+
+        return imgs
+
+#sample_func = SampleFunc(experiment.model)
+#FID_tf, IS_mean_tf, IS_std_tf = FID_IS_tf(sample_func=sample_func)
+#print(f'IS_mean_tf:{IS_mean_tf:.3f} +- {IS_std_tf:.3f}\n\tFID_tf: {FID_tf:.3f}')
+imgs2 = torch.cat(
+                [test_input[:6].unsqueeze(1), imgs[:6].unsqueeze(1)], dim=1)\
+                .view(-1, *test_input.shape[1:])
+save_image(imgs2, filename=f'{args.tl_imgdir}/recon.png', nrow=2, normalize=True, scale_each=True)
 
 pass
 

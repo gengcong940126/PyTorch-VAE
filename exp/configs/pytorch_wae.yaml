@@ -1,8 +1,10 @@
-train_vae:
+train_wae:
   model_params:
-    name: 'VanillaVAE'
+    name: 'WAE_MMD'
     in_channels: 3
     latent_dim: 128
+    reg_weight: 100
+    kernel_type: 'imq'
 
   exp_params:
     dataset: celeba
@@ -20,18 +22,16 @@ train_vae:
 
   logging_params:
     save_dir: "args.tl_outdir"
-    name: "VanillaVAE"
+    name: "WassersteinVAE_IMQ"
     manual_seed: 1265
 
-test_vae:
+test_wae:
   base:
-    - train_vae
-  ckpt_path: "results/train_vae_20200904-22_12_37_179/ckptdir/_ckpt_epoch_24.ckpt"
+    - train_wae
+  ckpt_path: "results/PyTorch_VAE/train_wae_20200905/ckptdir/_ckpt_epoch_24.ckpt"
   update_cfg: true
   GAN_metric:
     name: "TFFIDISScore"
     tf_fid_stat: "data/tf_fid_stats_celeba10000_64.npz"
     tf_inception_model_dir: "datasets/tf_inception_model"
     num_inception_images: 50000
-
-
