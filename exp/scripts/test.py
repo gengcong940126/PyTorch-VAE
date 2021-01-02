@@ -70,11 +70,11 @@ test_input, test_label = next(iter(sample_dataloader))
 #test_input = test_input.to('cuda')
 test_label = test_label.to('cuda')
 #imgs = experiment.model.sample(num_samples=64, current_device=0)
-test_input = scio.loadmat('./index.mat')
+test_input = scio.loadmat('./cifar10_index.mat')
 test_input=torch.Tensor(test_input['data']).to('cuda')
-imgs = experiment.model.generate(test_input, labels = test_label)
+imgs_recon = experiment.model.generate(test_input, labels = test_label)
 
-#FID_IS_tf = build_GAN_metric(config.GAN_metric)
+FID_IS_tf = build_GAN_metric(config.GAN_metric)
 
 class SampleFunc(object):
     def __init__(self, model):
@@ -86,11 +86,11 @@ class SampleFunc(object):
 
         return imgs
 
-#sample_func = SampleFunc(experiment.model)
-#FID_tf, IS_mean_tf, IS_std_tf = FID_IS_tf(sample_func=sample_func)
-#print(f'IS_mean_tf:{IS_mean_tf:.3f} +- {IS_std_tf:.3f}\n\tFID_tf: {FID_tf:.3f}')
+sample_func = SampleFunc(experiment.model)
+FID_tf, IS_mean_tf, IS_std_tf = FID_IS_tf(sample_func=sample_func)
+print(f'IS_mean_tf:{IS_mean_tf:.3f} +- {IS_std_tf:.3f}\n\tFID_tf: {FID_tf:.3f}')
 imgs2 = torch.cat(
-                [test_input[:6].unsqueeze(1), imgs[:6].unsqueeze(1)], dim=1)\
+                [test_input[:6].unsqueeze(1), imgs_recon[:6].unsqueeze(1)], dim=1)\
                 .view(-1, *test_input.shape[1:])
 save_image(imgs2, filename=f'{args.tl_imgdir}/recon.png', nrow=2, normalize=True, scale_each=True)
 

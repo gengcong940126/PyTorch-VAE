@@ -1,1 +1,14 @@
 .idea/
+results/reconstructions_aae.png
+results/reconstructions_aae.png
+results/reconstructions_age.png
+results/reconstructions_introvae.png
+results/cifar10/recon_ours.png
+results/cifar10/recon_vae.png
+results/cifar10/recon_wae.png
+results/cifar10/reconstructions_aae.png
+results/cifar10/reconstructions_age.png
+results/cifar10/reconstructions_introvae.png
+results/reconstructions_aae.png
+results/reconstructions_age.png
+results/reconstructions_introvae.png

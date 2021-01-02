@@ -26,9 +26,9 @@ class Testing_PyTorch_VAE(unittest.TestCase):
     :return:
     """
     if 'CUDA_VISIBLE_DEVICES' not in os.environ:
-      os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+      os.environ['CUDA_VISIBLE_DEVICES'] = '3'
     if 'TIME_STR' not in os.environ:
-      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '0'
+      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '1'
 
     command, outdir = get_command_and_outdir(self, func_name=sys._getframe().f_code.co_name, file=__file__)
     argv_str = f"""
@@ -61,7 +61,7 @@ class Testing_PyTorch_VAE(unittest.TestCase):
     if 'CUDA_VISIBLE_DEVICES' not in os.environ:
       os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     if 'TIME_STR' not in os.environ:
-      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '0'
+      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '1'
 
     command, outdir = get_command_and_outdir(self, func_name=sys._getframe().f_code.co_name, file=__file__)
     argv_str = f"""
@@ -93,7 +93,7 @@ class Testing_PyTorch_VAE(unittest.TestCase):
     if 'CUDA_VISIBLE_DEVICES' not in os.environ:
       os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     if 'TIME_STR' not in os.environ:
-      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '0'
+      os.environ['TIME_STR'] = '0' if utils.is_debugging() else '1'
 
     command, outdir = get_command_and_outdir(self, func_name=sys._getframe().f_code.co_name, file=__file__)
     argv_str = f"""

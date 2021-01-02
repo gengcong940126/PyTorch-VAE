@@ -2,14 +2,15 @@ train_wae:
   model_params:
     name: 'WAE_MMD'
     in_channels: 3
+    img_size: 32
     latent_dim: 128
     reg_weight: 100
     kernel_type: 'imq'
 
   exp_params:
-    dataset: celeba
+    dataset: cifar10
     data_path: "datasets/"
-    img_size: 64
+    img_size: 32
     batch_size: 64 # Better to have a square number
     LR: 0.005
     weight_decay: 0.0
@@ -17,8 +18,8 @@ train_wae:
 
   trainer_params:
     gpus: 1
-    max_nb_epochs: 25
-    max_epochs: 25
+    max_nb_epochs: 300
+    max_epochs: 300
 
   logging_params:
     save_dir: "args.tl_outdir"
@@ -28,10 +29,10 @@ train_wae:
 test_wae:
   base:
     - train_wae
-  ckpt_path: "results/PyTorch_VAE/train_wae_20200905/ckptdir/_ckpt_epoch_24.ckpt"
+  ckpt_path: "results/PyTorch_VAE/train_wae_20200921/ckptdir/_ckpt_epoch_99.ckpt"
   update_cfg: true
   GAN_metric:
     name: "TFFIDISScore"
-    tf_fid_stat: "data/tf_fid_stats_celeba10000_64.npz"
+    tf_fid_stat: "data/tf_fid_stats_cifar10_32.npz"
     tf_inception_model_dir: "datasets/tf_inception_model"
     num_inception_images: 50000
